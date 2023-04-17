@@ -9,3 +9,5 @@
        - config/
        - 
   - test/
+  - static /
+  - temp
