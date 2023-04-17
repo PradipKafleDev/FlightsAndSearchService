@@ -3,6 +3,7 @@
 *.ipr
 
 node_modules/
+.env
 
 # CMake
 cmake-build-*/
