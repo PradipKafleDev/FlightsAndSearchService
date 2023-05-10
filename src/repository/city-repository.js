@@ -1,14 +1,14 @@
+const { Op } = require('sequelize')
 const { City } = require('../models/index')
 
 class CityRepository {
-
   async createCity({ name }) {
     try {
       const city = await City.create({ name })
       return city
     } catch (error) {
       console.log(error.message)
-      throw {error}
+      throw { error }
     }
   }
 
@@ -19,39 +19,54 @@ class CityRepository {
           id: cityId,
         },
       })
-      return true;
+      return true
     } catch (error) {
-    console.log(error.message)
-    throw {error}
-
+      console.log(error.message)
+      throw { error }
     }
   }
 
-  async upDateCity(cityId,data){
+  async upDateCity(cityId, data) {
     try {
-      const city = await City.update(data,{
-        where:{
-          id:cityId
-        }
+      const city = await City.update(data, {
+        where: {
+          id: cityId,
+        },
       })
-      return city;
-
+      return city
     } catch (error) {
-      console.log(error.message);
-      throw{error}
-      
+      console.log(error.message)
+      throw { error }
     }
   }
 
-  async getCity(cityId){
+  async getCity(cityId) {
     try {
       const city = await City.findByPk(cityId)
-      return city;
-      
+      return city
     } catch (error) {
-      console.log(error.message);
-      throw{error}
-      
+      console.log(error.message)
+      throw { error }
+    }
+  }
+  async getAllCities(filter) {
+    //filter can be empty
+    try {
+      if (filter.name) {
+        const cities = await City.find({
+          where: {
+            name: {
+              [Op.startsWith]: filter.name,
+            },
+          },
+        })
+        return cities
+      }
+      const cities = await City.findAll()
+      return cities
+    } catch (error) {
+      console.log(error.message)
+      throw { error }
     }
   }
 }
